@@ -4,17 +4,37 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 
 
 public class MainActivity extends ActionBarActivity {
+    private EditText mTaskInput;
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        mTaskInput = (EditText) findViewById(R.id.task_input);
+        mListView = (ListView) findViewById(R.id.task_list);
     }
+
+
+
+        public void createTask(View v) {
+            if (mTaskInput.getText().length() > 0){
+                Job j = new Job();
+                j.setDescription(mTaskInput.getText().toString());
+                j.setCompleted(false);
+                j.saveEventually();
+                mTaskInput.setText("");
+            }
+        }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
