@@ -1,24 +1,26 @@
 package njerry.todolist;
 
 import android.annotation.TargetApi;
+import android.graphics.Paint;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     private EditText mTaskInput;
     private ListView mListView;
     private MyAdapter mAdapter;
@@ -36,9 +38,9 @@ public class MainActivity extends ActionBarActivity {
 
         updateData();
 
+        mListView.setOnItemClickListener(this);
+
     }
-
-
 
         public void createTask(View v) {
             if (mTaskInput.getText().length() > 0) {
@@ -67,6 +69,23 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Job job = mAdapter.getItem(position);
+        TextView taskDescription = (TextView) view.findViewById(R.id.job_description);
+
+        job.setCompleted(!job.isCompleted());
+
+        if(job.isCompleted()){
+            taskDescription.setPaintFlags(taskDescription.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            taskDescription.setPaintFlags(taskDescription.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
+
+        job.saveEventually();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
