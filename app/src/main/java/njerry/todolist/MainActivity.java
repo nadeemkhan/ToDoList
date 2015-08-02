@@ -1,5 +1,7 @@
 package njerry.todolist;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,10 +10,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
+import com.parse.ParseQuery;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
     private EditText mTaskInput;
     private ListView mListView;
+    private MyAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +30,18 @@ public class MainActivity extends ActionBarActivity {
 
         mTaskInput = (EditText) findViewById(R.id.task_input);
         mListView = (ListView) findViewById(R.id.task_list);
+
+        mAdapter = new MyAdapter(this, new ArrayList<Job>());
+        mListView.setAdapter(mAdapter);
+
+        updateData();
+
     }
 
 
 
         public void createTask(View v) {
-            if (mTaskInput.getText().length() > 0){
+            if (mTaskInput.getText().length() > 0) {
                 Job j = new Job();
                 j.setDescription(mTaskInput.getText().toString());
                 j.setCompleted(false);
@@ -33,6 +49,23 @@ public class MainActivity extends ActionBarActivity {
                 mTaskInput.setText("");
             }
         }
+
+
+
+    public void updateData(){
+        ParseQuery<Job> query = ParseQuery.getQuery(Job.class);
+        query.findInBackground(new FindCallback<Job>() {
+
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+            @Override
+            public void done(List<Job> list, com.parse.ParseException e) {
+                if(list != null){
+                    mAdapter.clear();
+                    mAdapter.addAll(list);
+                }
+            }
+        });
+    }
 
 
 
