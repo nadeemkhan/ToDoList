@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
                 j.setCompleted(false);
                 j.saveEventually();
                 mTaskInput.setText("");
+                mAdapter.insert(j, 0);
             }
         }
 
@@ -66,8 +67,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
