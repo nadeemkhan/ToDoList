@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     public void updateData(){
         ParseQuery<Job> query = ParseQuery.getQuery(Job.class);
+        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
         query.findInBackground(new FindCallback<Job>() {
 
             @TargetApi(Build.VERSION_CODES.HONEYCOMB)
