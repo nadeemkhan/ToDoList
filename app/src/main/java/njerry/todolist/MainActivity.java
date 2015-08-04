@@ -14,7 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.ParseACL;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         public void createTask(View v) {
             if (mTaskInput.getText().length() > 0) {
                 Job j = new Job();
+                j.setACL(new ParseACL(ParseUser.getCurrentUser()));
+                j.setUser(ParseUser.getCurrentUser());
                 j.setDescription(mTaskInput.getText().toString());
                 j.setCompleted(false);
                 j.saveEventually();
@@ -57,6 +61,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     public void updateData(){
         ParseQuery<Job> query = ParseQuery.getQuery(Job.class);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
         query.findInBackground(new FindCallback<Job>() {
 
