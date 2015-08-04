@@ -43,6 +43,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         mListView.setOnItemClickListener(this);
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if(currentUser == null){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
         public void createTask(View v) {
