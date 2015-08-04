@@ -24,7 +24,7 @@
             android:text="Username:" />
 
         <EditText
-            android:id="@+id/register_username"
+            android:id="@+id/login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -39,7 +39,7 @@
             android:text="Password:" />
 
         <EditText
-            android:id="@+id/register_password"
+            android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="17sp"
-        android:onClick="showLogin"
+        android:onClick="showRegistration"
         android:text="Don&apos;t Have An Account? Register!" />
 
 </LinearLayout>
