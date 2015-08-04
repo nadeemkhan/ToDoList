@@ -40,7 +40,6 @@ public class LoginActivity extends ActionBarActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    // Signup failed. Look at the ParseException to see what happened.
                     switch (e.getCode()) {
                         case ParseException.USERNAME_TAKEN:
                             mErrorField.setText("Sorry, this username has already been taken.");
