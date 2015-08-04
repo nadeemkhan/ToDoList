@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -16,6 +17,7 @@ import com.parse.SignUpCallback;
 public class RegisterActivity extends ActionBarActivity {
     private EditText mUsernameField;
     private EditText mPasswordField;
+    private TextView mErrorField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class RegisterActivity extends ActionBarActivity {
 
         mUsernameField = (EditText) findViewById(R.id.register_username);
         mPasswordField = (EditText) findViewById(R.id.register_password);
+        mErrorField = (TextView) findViewById(R.id.error_messages);
     }
 
     public void register(final View v) {
@@ -43,8 +46,19 @@ public class RegisterActivity extends ActionBarActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    // Sign up didn't succeed. Look at the ParseException
-                    // to figure out what went wrong
+                    switch(e.getCode()){
+                        case ParseException.USERNAME_TAKEN:
+                            mErrorField.setText("Sorry, this username has already been taken.");
+                            break;
+                        case ParseException.USERNAME_MISSING:
+                            mErrorField.setText("Sorry, you must supply a username to register.");
+                            break;
+                        case ParseException.PASSWORD_MISSING:
+                            mErrorField.setText("Sorry, you must supply a password to register.");
+                            break;
+                        default:
+                            mErrorField.setText(e.getLocalizedMessage());
+                    }
                     v.setEnabled(true);
                 }
             }

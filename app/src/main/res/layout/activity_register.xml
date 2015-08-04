@@ -19,6 +19,14 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/error_messages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffff070b"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Username:" />
@@ -61,5 +69,9 @@
         android:textSize="17sp"
         android:onClick="showLogin"
         android:text="Already Have An Account? Log In!" />
+
+
+
+
 
 </LinearLayout>
